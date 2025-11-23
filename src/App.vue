@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import {
   getPopularMovies,
   getMoviesByCategory,
-
+  searchMovies,
   discoverMoviesByYear,
   getMovieDetails,
 } from './api/service'
@@ -22,10 +22,10 @@ const selectedMovieDetail = ref(null)
 
 
 const categories = [
-  { id: 'popular',     label: '🔥 Populares' },
+  { id: 'popular', label: '🔥 Populares' },
   { id: 'now_playing', label: '🎬 Em Cartaz' },
-  { id: 'top_rated',   label: '⭐ Bem Avaliados' },
-  { id: 'upcoming',    label: '🚀 Em Breve' },
+  { id: 'top_rated', label: '⭐ Bem Avaliados' },
+  { id: 'upcoming', label: '🚀 Em Breve' },
 ]
 
 
@@ -214,23 +214,16 @@ onMounted(() => {
 
       <section class="space-y-4">
         <div class="flex flex-wrap gap-2 border-b border-slate-800/80 pb-4">
-          <button
-            v-for="category in categories"
-            :key="category.id"
-            @click="selectCategory(category.id)"
-            :class="[
-              'inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
-              'border border-transparent',
-              activeCategory === category.id
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40 border-blue-400/60'
-                : 'bg-slate-900/70 text-slate-300 border-slate-700/70 hover:border-slate-500 hover:bg-slate-800'
-            ]"
-          >
+          <button v-for="category in categories" :key="category.id" @click="selectCategory(category.id)" :class="[
+            'inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
+            'border border-transparent',
+            activeCategory === category.id
+              ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40 border-blue-400/60'
+              : 'bg-slate-900/70 text-slate-300 border-slate-700/70 hover:border-slate-500 hover:bg-slate-800'
+          ]">
             <span>{{ category.label }}</span>
-            <span
-              v-if="activeCategory === category.id"
-              class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"
-            ></span>
+            <span v-if="activeCategory === category.id"
+              class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
           </button>
         </div>
 
@@ -242,33 +235,29 @@ onMounted(() => {
               <span v-else>Nenhum filme carregado</span>
             </span>
 
-            <span
-              v-if="searchQuery"
-              class="inline-flex items-center gap-2 rounded-full bg-slate-900/70 border border-slate-700 px-3 py-1"
-            >
+            <span v-if="searchQuery"
+              class="inline-flex items-center gap-2 rounded-full bg-slate-900/70 border border-slate-700 px-3 py-1">
               <span class="text-slate-400">Pesquisa:</span>
               <span class="font-medium text-slate-100">"{{ searchQuery }}"</span>
             </span>
 
-            <span
-              v-if="selectedYear"
-              class="inline-flex items-center gap-2 rounded-full bg-slate-900/70 border border-slate-700 px-3 py-1"
-            >
+            <span v-if="selectedYear"
+              class="inline-flex items-center gap-2 rounded-full bg-slate-900/70 border border-slate-700 px-3 py-1">
               <span class="text-slate-400">Ano:</span>
               <span class="font-medium text-slate-100">{{ selectedYear }}</span>
             </span>
           </div>
 
           <div class="text-slate-500 text-[11px] md:text-xs">
-            Dica: pressione <span class="px-1 py-0.5 rounded bg-slate-800/80 border border-slate-700">Enter</span> para pesquisar
+            Dica: pressione <span class="px-1 py-0.5 rounded bg-slate-800/80 border border-slate-700">Enter</span> para
+            pesquisar
           </div>
         </div>
       </section>
 
 
       <section
-        class="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md shadow-xl shadow-black/40 p-4 md:p-6"
-      >
+        class="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md shadow-xl shadow-black/40 p-4 md:p-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 
 
@@ -278,13 +267,9 @@ onMounted(() => {
             </label>
             <div class="relative">
               <span class="absolute inset-y-0 left-3 flex items-center text-slate-500 text-sm">🔍</span>
-              <input
-                v-model="searchQuery"
-                type="text"
-                placeholder="Digite o título do filme..."
+              <input v-model="searchQuery" type="text" placeholder="Digite o título do filme..."
                 @keyup.enter="handleSearch"
-                class="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-950/60 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 transition-all"
-              />
+                class="w-full pl-9 pr-3 py-2.5 rounded-lg bg-slate-950/60 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 transition-all" />
             </div>
           </div>
 
@@ -293,11 +278,8 @@ onMounted(() => {
             <label class="block text-xs font-semibold uppercase tracking-wide text-slate-400">
               Gênero
             </label>
-            <select
-              v-model="selectedGenre"
-              @change="handleGenreFilter"
-              class="w-full px-3 py-2.5 rounded-lg bg-slate-950/60 border border-slate-700 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 transition-all cursor-pointer"
-            >
+            <select v-model="selectedGenre" @change="handleGenreFilter"
+              class="w-full px-3 py-2.5 rounded-lg bg-slate-950/60 border border-slate-700 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 transition-all cursor-pointer">
               <option value="">Todos os gêneros</option>
               <option v-for="genre in allGenres" :key="genre.id" :value="genre.id">
                 {{ genre.name }}
@@ -310,15 +292,9 @@ onMounted(() => {
             <label class="block text-xs font-semibold uppercase tracking-wide text-slate-400">
               Ano
             </label>
-            <input
-              v-model="selectedYear"
-              type="number"
-              min="1900"
-              max="2100"
-              placeholder="Ex: 2024"
+            <input v-model="selectedYear" type="number" min="1900" max="2100" placeholder="Ex: 2024"
               @change="handleYearFilter"
-              class="w-full px-3 py-2.5 rounded-lg bg-slate-950/60 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 transition-all"
-            />
+              class="w-full px-3 py-2.5 rounded-lg bg-slate-950/60 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 transition-all" />
           </div>
 
 
@@ -326,11 +302,8 @@ onMounted(() => {
             <label class="block text-xs font-semibold uppercase tracking-wide text-slate-400">
               Ordenar por
             </label>
-            <select
-              v-model="sortBy"
-              @change="handleSort"
-              class="w-full px-3 py-2.5 rounded-lg bg-slate-950/60 border border-slate-700 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 transition-all cursor-pointer"
-            >
+            <select v-model="sortBy" @change="handleSort"
+              class="w-full px-3 py-2.5 rounded-lg bg-slate-950/60 border border-slate-700 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 transition-all cursor-pointer">
               <option value="popularity">Popularidade</option>
               <option value="rating">Avaliação</option>
               <option value="release">Data de Lançamento</option>
@@ -342,15 +315,9 @@ onMounted(() => {
 
 
 
-      <section
-        v-if="loading"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-      >
-        <div
-          v-for="n in 8"
-          :key="n"
-          class="animate-pulse rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden"
-        >
+      <section v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div v-for="n in 8" :key="n"
+          class="animate-pulse rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden">
           <div class="w-full h-72 bg-slate-800"></div>
           <div class="p-4 space-y-3">
             <div class="h-4 bg-slate-800 rounded w-3/4"></div>
@@ -361,49 +328,32 @@ onMounted(() => {
       </section>
 
 
-      <section
-        v-else-if="error"
-        class="rounded-2xl border border-red-800/70 bg-red-950/40 p-6 text-red-100 text-center shadow-lg shadow-red-900/40"
-      >
+      <section v-else-if="error"
+        class="rounded-2xl border border-red-800/70 bg-red-950/40 p-6 text-red-100 text-center shadow-lg shadow-red-900/40">
         <p class="font-semibold mb-1 text-red-200">⚠️ Erro ao carregar filmes</p>
         <p class="text-sm text-red-100/90">{{ error }}</p>
-        <button
-          @click="fetchMovies"
-          class="mt-4 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-sm font-medium text-white transition-colors"
-        >
+        <button @click="fetchMovies"
+          class="mt-4 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-sm font-medium text-white transition-colors">
           <span>🔄</span>
           <span>Tentar novamente</span>
         </button>
       </section>
 
 
-      <section
-        v-else-if="movies.length > 0"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-      >
-        <article
-          v-for="movie in movies"
-          :key="movie.id"
-          @click="selectMovie(movie)"
-          class="group rounded-2xl border border-slate-800 bg-slate-900/70 backdrop-blur-md overflow-hidden hover:border-blue-500/60 hover:shadow-2xl hover:shadow-blue-900/30 transition-all duration-300 cursor-pointer flex flex-col"
-        >
+      <section v-else-if="movies.length > 0"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <article v-for="movie in movies" :key="movie.id" @click="selectMovie(movie)"
+          class="group rounded-2xl border border-slate-800 bg-slate-900/70 backdrop-blur-md overflow-hidden hover:border-blue-500/60 hover:shadow-2xl hover:shadow-blue-900/30 transition-all duration-300 cursor-pointer flex flex-col">
           <div class="relative overflow-hidden bg-slate-800 aspect-[2/3]">
-            <img
-              v-if="movie.poster_path"
-              :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`"
+            <img v-if="movie.poster_path" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`"
               :alt="movie.title"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-            <div
-              v-else
-              class="w-full h-full flex items-center justify-center text-slate-500 text-sm"
-            >
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <div v-else class="w-full h-full flex items-center justify-center text-slate-500 text-sm">
               Sem imagem
             </div>
 
             <div
-              class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3"
-            >
+              class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
               <div class="flex items-center justify-between text-xs text-white/90">
                 <div class="inline-flex items-center gap-1">
                   <span>⭐</span>
@@ -414,23 +364,19 @@ onMounted(() => {
             </div>
 
             <div
-              class="absolute top-3 right-3 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg shadow-blue-900/50"
-            >
+              class="absolute top-3 right-3 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg shadow-blue-900/50">
               {{ movie.vote_average.toFixed(1) }}
             </div>
           </div>
 
           <div class="p-4 flex-1 flex flex-col">
             <h3
-              class="font-semibold text-sm md:text-base mb-1 line-clamp-2 group-hover:text-blue-300 transition-colors"
-            >
+              class="font-semibold text-sm md:text-base mb-1 line-clamp-2 group-hover:text-blue-300 transition-colors">
               {{ movie.title }}
             </h3>
 
-            <p
-              v-if="movie.original_title && movie.original_title !== movie.title"
-              class="text-slate-400 text-[11px] mb-2 line-clamp-1"
-            >
+            <p v-if="movie.original_title && movie.original_title !== movie.title"
+              class="text-slate-400 text-[11px] mb-2 line-clamp-1">
               {{ movie.original_title }}
             </p>
 
@@ -439,36 +385,23 @@ onMounted(() => {
               <span>{{ formatDate(movie.release_date) }}</span>
             </div>
 
-            <div
-              v-if="movie.genre_ids && movie.genre_ids.length > 0"
-              class="flex flex-wrap gap-1.5 mb-3"
-            >
-              <span
-                v-for="genreId in movie.genre_ids.slice(0, 2)"
-                :key="genreId"
-                class="inline-flex items-center px-2 py-0.5 rounded-full bg-blue-600/25 text-[11px] font-medium text-blue-100 border border-blue-500/30"
-              >
+            <div v-if="movie.genre_ids && movie.genre_ids.length > 0" class="flex flex-wrap gap-1.5 mb-3">
+              <span v-for="genreId in movie.genre_ids.slice(0, 2)" :key="genreId"
+                class="inline-flex items-center px-2 py-0.5 rounded-full bg-blue-600/25 text-[11px] font-medium text-blue-100 border border-blue-500/30">
                 {{ getGenreName(genreId) }}
               </span>
-              <span
-                v-if="movie.genre_ids.length > 2"
-                class="inline-flex items-center text-[11px] text-slate-400 px-2 py-0.5"
-              >
+              <span v-if="movie.genre_ids.length > 2"
+                class="inline-flex items-center text-[11px] text-slate-400 px-2 py-0.5">
                 +{{ movie.genre_ids.length - 2 }}
               </span>
             </div>
 
-            <p
-              v-if="movie.overview"
-              class="text-slate-400 text-[11px] md:text-xs line-clamp-2 mb-4 leading-relaxed"
-            >
+            <p v-if="movie.overview" class="text-slate-400 text-[11px] md:text-xs line-clamp-2 mb-4 leading-relaxed">
               {{ movie.overview }}
             </p>
 
-            <button
-              @click.stop="selectMovie(movie)"
-              class="mt-auto w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-xs md:text-sm font-medium text-white transition-colors"
-            >
+            <button @click.stop="selectMovie(movie)"
+              class="mt-auto w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-xs md:text-sm font-medium text-white transition-colors">
               Ver detalhes
             </button>
           </div>
@@ -485,34 +418,23 @@ onMounted(() => {
     </main>
 
     <!-- MODAL DETALHES QUE NAO ESTA A FUNCIOAR -->
-    <div
-      v-if="selectedMovieDetail"
-      class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 overflow-y-auto"
-    >
-      <div class="bg-slate-900/95 border border-slate-700 rounded-2xl max-w-2xl w-full my-8 shadow-2xl shadow-black/70 animate-in">
+    <div v-if="selectedMovieDetail"
+      class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 overflow-y-auto">
+      <div
+        class="bg-slate-900/95 border border-slate-700 rounded-2xl max-w-2xl w-full my-8 shadow-2xl shadow-black/70 animate-in">
         <div v-if="selectedMovieDetail.backdrop_path" class="relative h-56 md:h-72 overflow-hidden rounded-t-2xl">
-          <img
-            :src="`https://image.tmdb.org/t/p/w1280${selectedMovieDetail.backdrop_path}`"
-            :alt="selectedMovieDetail.title"
-            class="w-full h-full object-cover"
-          />
+          <img :src="`https://image.tmdb.org/t/p/w1280${selectedMovieDetail.backdrop_path}`"
+            :alt="selectedMovieDetail.title" class="w-full h-full object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-black/30 to-transparent"></div>
-          <button
-            @click="selectedMovieDetail = null"
-            class="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all"
-          >
+          <button @click="selectedMovieDetail = null"
+            class="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all">
             ✕
           </button>
         </div>
-        <div
-          v-else
-          class="bg-slate-800 h-32 rounded-t-2xl flex items-center justify-between px-4 relative"
-        >
+        <div v-else class="bg-slate-800 h-32 rounded-t-2xl flex items-center justify-between px-4 relative">
           <span class="text-slate-300 text-sm">Sem imagem de capa</span>
-          <button
-            @click="selectedMovieDetail = null"
-            class="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all"
-          >
+          <button @click="selectedMovieDetail = null"
+            class="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all">
             ✕
           </button>
         </div>
@@ -522,10 +444,8 @@ onMounted(() => {
             <h2 class="text-2xl md:text-3xl font-bold text-white mb-1">
               {{ selectedMovieDetail.title }}
             </h2>
-            <p
-              v-if="selectedMovieDetail.original_title && selectedMovieDetail.original_title !== selectedMovieDetail.title"
-              class="text-slate-400 text-sm"
-            >
+            <p v-if="selectedMovieDetail.original_title && selectedMovieDetail.original_title !== selectedMovieDetail.title"
+              class="text-slate-400 text-sm">
               {{ selectedMovieDetail.original_title }}
             </p>
           </div>
@@ -546,17 +466,11 @@ onMounted(() => {
             </div>
           </div>
 
-          <div
-            v-if="selectedMovieDetail.genre_ids && selectedMovieDetail.genre_ids.length > 0"
-            class="space-y-2"
-          >
+          <div v-if="selectedMovieDetail.genre_ids && selectedMovieDetail.genre_ids.length > 0" class="space-y-2">
             <p class="text-slate-300 text-sm font-medium">Gêneros</p>
             <div class="flex flex-wrap gap-2">
-              <span
-                v-for="genreId in selectedMovieDetail.genre_ids"
-                :key="genreId"
-                class="bg-blue-600/25 text-blue-100 px-3 py-1 rounded-full text-xs border border-blue-500/40"
-              >
+              <span v-for="genreId in selectedMovieDetail.genre_ids" :key="genreId"
+                class="bg-blue-600/25 text-blue-100 px-3 py-1 rounded-full text-xs border border-blue-500/40">
                 {{ getGenreName(genreId) }}
               </span>
             </div>
@@ -570,10 +484,8 @@ onMounted(() => {
           </div>
 
           <div class="pt-4 border-t border-slate-800">
-            <button
-              @click="selectedMovieDetail = null"
-              class="w-full py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-medium text-white transition-colors"
-            >
+            <button @click="selectedMovieDetail = null"
+              class="w-full py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-medium text-white transition-colors">
               Fechar
             </button>
           </div>
@@ -589,6 +501,7 @@ onMounted(() => {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
