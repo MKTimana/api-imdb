@@ -1,79 +1,44 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
+:root{
+  --main-100: hsl(207, 87%, 76%);
+  --main-200: hsl(207, 71%, 53%);
+  --main-300: hsl(207, 77%, 34%);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --accent-100: hsl(229, 98%, 66%);
+  --accent-200: hsl(229, 100%, 36%);
+  --accent-300: hsl(229, 100%, 22%);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  --surface-100: hsl(0, 0%, 100%);
+  --surface-200: hsl(0, 0%, 60%);
+  --surface-300: hsl(0, 0%, 40%);
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  --dark-100: hsl(0, 0%, 30%); 
+  --dark-200: hsl(0, 0%, 20%); 
+  --dark-300: hsl(0, 0%, 10%); 
 }
-a:hover {
-  color: #535bf2;
-}
+@theme{
+  --color-main-100:var(--main-100);
+  --color-main-200:var(--main-200);
+  --color-main-300:var(--main-300);
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  --color-accent-100:var(--accent-100);
+  --color-accent-200:var(--accent-200);
+  --color-accent-300:var(--accent-300);
+  
+  --color-surface-100:var(--surface-100);
+  --color-surface-200:var(--surface-200);
+  --color-surface-300:var(--surface-300);
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  --color-dark-100:var(--dark-100);
+  --color-dark-200:var(--dark-200);
+  --color-dark-300:var(--dark-300);
 }
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+body{
+  background-color: var(--surface-200);
 }
 
-.card {
-  padding: 2em;
-}
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+@media (prefers-color-scheme: dark) {
+  body{
+    background-color: var(--dark-300);
   }
 }

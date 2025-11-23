@@ -1,30 +1,29 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+import Card from './components/Card.vue'
+export default {
+  components: {
+    Card
+  },
+  data() {
+    return {
+      movies: [
+        {title: "Home", image_url: "https://via.placeholder.com/150", description: "A family of mice living in a quiet suburban home are uprooted by a group of streetwise cats."},
+        {title: "Home", image_url: "https://via.placeholder.com/150", description: "A family of mice living in a quiet suburban home are uprooted by a group of streetwise cats."},
+        {title: "Home", image_url: "https://via.placeholder.com/150", description: "A family of mice living in a quiet suburban home are uprooted by a group of streetwise cats."},
+      ]
+    };
+  }
+};
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <ul class="flex flex-col gap-3 md:gap-5 p-2 lg:grid lg:grid-cols-2">
+    <li v-for="(movie, index) in movies" :key="index">
+      <Card :movie="movie" />
+    </li>
+  </ul>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
 </style>
