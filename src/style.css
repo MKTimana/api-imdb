@@ -33,6 +33,7 @@
   --color-dark-200:var(--dark-200);
   --color-dark-300:var(--dark-300);
 }
+
 body{
   background-color: var(--surface-200);
 }
