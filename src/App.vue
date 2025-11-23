@@ -1,19 +1,5 @@
-<script>
-import Card from './components/Card.vue'
-export default {
-  components: {
-    Card
-  },
-  data() {
-    return {
-      movies: [
-        {title: "Home", image_url: "https://via.placeholder.com/150", description: "A family of mice living in a quiet suburban home are uprooted by a group of streetwise cats."},
-        {title: "Home", image_url: "https://via.placeholder.com/150", description: "A family of mice living in a quiet suburban home are uprooted by a group of streetwise cats."},
-        {title: "Home", image_url: "https://via.placeholder.com/150", description: "A family of mice living in a quiet suburban home are uprooted by a group of streetwise cats."},
-      ]
-    };
-  }
-};
+<script setup>
+import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
@@ -24,6 +10,40 @@ export default {
   </ul>
 </template>
 
+<script>
+import { ref, onMounted } from 'vue';
+import { getPopularMovies } from './api/service';
+
+export default {
+  name: 'IMDB',
+  setup() {
+    const filmes = ref([])
+
+    onMounted(async () => {
+      const data = await getPopularMovies()
+      filmes.value = data
+    })
+    return { filmes }
+  }
+}
+
+</script>
+
+<style>
+#app {
+  text-align: center;
+}
+
+.movie {
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+}
+
+.movie img {
+  width: 200px;
+  height: auto;
+}
 <style scoped>
 
 </style>
