@@ -1,67 +1,77 @@
-import axios from "axios";
-const apiKey = 'ef5be530451329d0405c4fae2da47611';
+
+import axios from 'axios'
+
+
+const apiKey = 'ef5be530451329d0405c4fae2da47611'
 const base_url = 'https://api.themoviedb.org/3'
 
 const db = axios.create({
   baseURL: base_url,
   params: {
     api_key: apiKey,
-    language: 'pt-PT'
-  }
+    language: 'pt-PT', 
+  },
 })
 
-// export const getPopularMovies = async () => {
-//   try {
-//     const res = await db.get('/movie/popular')
-//     console.log(res.data)
-//     return res.data
-//   } catch (error) {
-//     console.log('erro de consulta', error)
-//     return null
-//   }
-// }
-
-export const getPopularMovies = async () => {
+export const getPopularMovies = async (page = 1) => {
   try {
-    const res = await db.get('/movie/popular'); 
-    console.log("🚀 ~ fetchPopularMovies ~ res:", res.data)
-    return res.data.results;  
+    const res = await db.get('/movie/popular', { params: { page } })
+    return res.data.results
   } catch (error) {
-    console.log('Erro de consulta', error);
-    return [];
+    console.error('Erro ao buscar filmes populares', error)
+    throw error
   }
-};
+}
 
-export const searchMovies = async (title, year) => {
+export const getMoviesByCategory = async (category, page = 1) => {
   try {
-    let url = `/search/movie?query=${encodeURIComponent(title)}`;
-    if (year) url += `&primary_release_year=${year}`;
-    const res = await db.get(url);  // Usando axios para pesquisa de filmes
-    return res.data.results;  // Retorna os filmes encontrados
+    const res = await db.get(`/movie/${category}`, { params: { page } })
+    return res.data.results
   } catch (error) {
-    console.log('Erro de consulta', error);
-    return [];
+    console.error('Erro ao buscar filmes por categoria', error)
+    throw error
   }
-};
+}
 
-export const discoverMoviesByYear = async (year) => {
+export const searchMovies = async (title, year, page = 1) => {
   try {
-    const res = await db.get(`/discover/movie?primary_release_year=${year}`);  // Usando axios para descobrir filmes por ano
-    return res.data.results;  // Retorna os filmes do ano especificado
+    const res = await db.get('/search/movie', {
+      params: {
+        query: title,
+        primary_release_year: year || undefined,
+        page,
+      },
+    })
+    return res.data.results
   } catch (error) {
-    console.log('Erro de consulta', error);
-    return [];
+    console.error('Erro na pesquisa de filmes', error)
+    throw error
   }
-};
+}
+
+export const discoverMoviesByYear = async (year, page = 1) => {
+  try {
+    const res = await db.get('/discover/movie', {
+      params: {
+        primary_release_year: year,
+        page,
+      },
+    })
+    return res.data.results
+  } catch (error) {
+    console.error('Erro ao descobrir filmes por ano', error)
+    throw error
+  }
+}
 
 export const getMovieDetails = async (id) => {
   try {
-    const res = await db.get(`/movie/${id}`);  // Usando axios para obter detalhes do filme
-    return res.data;  // Retorna os detalhes do filme
+    const res = await db.get(`/movie/${id}`)
+    return res.data
   } catch (error) {
-    console.log('Erro de consulta', error);
-    return null;
+    console.error('Erro ao buscar detalhes do filme', error)
+    throw error
   }
-};
+}
 
-export default db;
+export default db
