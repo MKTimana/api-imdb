@@ -47,7 +47,7 @@ Para executar o projeto, você deve ter instalado:
 
 ## 🔹 **1. Método Recomendado: Usando Docker**
 - Executar o comando pelo CLI na pasta raíz do projecto -> docker-compose up --build
-- Acessar pelo browser -> http://localhost:8080
+- Acessar pelo browser -> http://localhost:5173
 
 ## 👥 Autores
 - Milton Timana @MKTimana
