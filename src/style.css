@@ -13,8 +13,8 @@
   --surface-300: hsl(0, 0%, 40%);
 
   --dark-100: hsl(0, 0%, 30%); 
-  --dark-200: hsl(0, 0%, 20%); 
-  --dark-300: hsl(0, 0%, 10%); 
+  --dark-200: hsl(0, 0%, 15%); 
+  --dark-300: hsl(0, 0%, 5%); 
 }
 @theme{
   --color-main-100:var(--main-100);
@@ -36,6 +36,10 @@
 
 body{
   background-color: var(--surface-200);
+}
+
+@utility transition-smooth {
+  transition: all 0.3s ease-out 0.1s;
 }
 
 @media (prefers-color-scheme: dark) {
