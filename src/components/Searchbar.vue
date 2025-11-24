@@ -17,37 +17,15 @@
 </script>
 
 <template>
-  <div class="searchbar">
+  <div class="flex rounded-xl gap-1.5 p-1.5 transition-smooth bg-surface-200 dark:bg-dark-200/30 inset-shadow-sm inset-shadow-black/40 dark:inset-shadow-black/80 outline-1 outline-transparent focus-within:outline-dark-300 dark:focus-within:outline-surface-300">
     <input
       type="text"
       v-model="query"
       placeholder="Search for a movie, tv show, documentary, ..."
       @keyup.enter="search"
+      class="w-full text-base py-1.5 px-3 outline-0"
     />
 
-    <button @click="search" class="search-btn">Search</button>
+    <button @click="search" class="px-1.5">Search</button>
   </div>
 </template>
-
-<style>
-  .searchbar {
-    display: flex;
-    gap: 8px;
-  }
-
-  input {
-    flex: 1;
-    padding: 6px;
-  }
-
-  .search-btn{
-    border: none;
-    border-radius: 5px;
-    padding: .8em 1.5em;
-    background-color: black;
-    font-family: Arial;
-    color: white;
-    
-    cursor: pointer;
-  }
-</style>
